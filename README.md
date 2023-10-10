@@ -37,6 +37,17 @@ bash ./bash/tent_vit.sh # Tent
 bash ./bash/cotta_vit.sh # CoTTA
 ```
 
+### Cifar10-to-Cifar10C task 
+We release the codebase of the baseline method based vit. 
+
+Please load the source model from [here](https://drive.google.com/file/d/1pAoz4Wwos74DjWPQ5d-6ntyjQkmp9FPE/view?usp=sharing)
+```bash
+cd cifar
+bash ./bash/source_vit.sh # Source model directly test on target domain
+bash ./bash/tent_vit.sh # Tent 
+bash ./bash/cotta_vit.sh # CoTTA
+```
+
 Additional codes will be available soon.
 ## Citation
 Please cite our work if you find it useful.
