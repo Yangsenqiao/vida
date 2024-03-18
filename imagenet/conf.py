@@ -127,6 +127,13 @@ _C.LOG_DEST = "log.txt"
 # Log datetime
 _C.LOG_TIME = ''
 
+# ViDA parameters
+_C.OPTIM.ViDALR = 5e-8
+_C.TEST.vida_rank1 = 1
+_C.TEST.vida_rank2 = 128
+_C.OPTIM.MT_ViDA = 0.999
+_C.OPTIM.MT = 0.999
+
 # # Config destination (in SAVE_DIR)
 # _C.CFG_DEST = "cfg.yaml"
 
@@ -176,7 +183,8 @@ def load_cfg_fom_args(description="Config options."):
     parser.add_argument("opts", default=None, nargs=argparse.REMAINDER,
                         help="See conf.py for all options")
     parser.add_argument("--data_dir", default='/data', type=str)
-    parser.add_argument("--bs", default=64, type=int)
+    parser.add_argument("--checkpoint", default=None, type=str)
+    parser.add_argument("--unc_thr", default=0.2, type=float)
 
     
     if len(sys.argv) == 1:
@@ -188,7 +196,7 @@ def load_cfg_fom_args(description="Config options."):
     cfg.merge_from_list(args.opts)
 
     cfg.DATA_DIR = args.data_dir
-    cfg.TEST.BATCH_SIZE = args.bs
+    cfg.TEST.ckpt = args.checkpoint
 
     log_dest = os.path.basename(args.cfg_file)
     log_dest = log_dest.replace('.yaml', '_{}.txt'.format(current_time))
@@ -217,3 +225,4 @@ def load_cfg_fom_args(description="Config options."):
     logger.info(
         "PyTorch Version: torch={}, cuda={}, cudnn={}".format(*version))
     logger.info(cfg)
+    return args

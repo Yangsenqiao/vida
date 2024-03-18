@@ -8,10 +8,9 @@ from robustbench.model_zoo.enums import ThreatModel
 from robustbench.utils import load_model
 from robustbench.utils import clean_accuracy as accuracy
 
-
-import timm
 import tent
 import cotta
+import vida
 
 from conf import cfg, load_cfg_fom_args
 
@@ -19,8 +18,9 @@ from conf import cfg, load_cfg_fom_args
 logger = logging.getLogger(__name__)
 
 
+
 def evaluate(description):
-    load_cfg_fom_args(description)
+    args = load_cfg_fom_args(description)
     # configure model
     base_model = load_model(cfg.MODEL.ARCH, cfg.CKPT_DIR,
                        cfg.CORRUPTION.DATASET, ThreatModel.corruptions).cuda()
@@ -33,8 +33,12 @@ def evaluate(description):
     if cfg.MODEL.ADAPTATION == "cotta":
         logger.info("test-time adaptation: CoTTA")
         model = setup_cotta(base_model)
+    if cfg.MODEL.ADAPTATION == "vida":
+        logger.info("test-time adaptation: ViDA")
+        model = setup_vida(args, base_model)
     # evaluate on each severity and type of corruption in turn
     prev_ct = "x0"
+    All_error = []
     for ii, severity in enumerate(cfg.CORRUPTION.SEVERITY):
         for i_x, corruption_type in enumerate(cfg.CORRUPTION.TYPE):
             # reset adaptation for each combination of corruption x severity
@@ -53,7 +57,9 @@ def evaluate(description):
             x_test, y_test = x_test.cuda(), y_test.cuda()
             acc = accuracy(model, x_test, y_test, cfg.TEST.BATCH_SIZE)
             err = 1. - acc
+            All_error.append(err)
             logger.info(f"error % [{corruption_type}{severity}]: {err:.2%}")
+
 
 def setup_source(model):
     """Set up the baseline source model without adaptation."""
@@ -124,6 +130,34 @@ def setup_cotta(model):
     logger.info(f"optimizer for adaptation: %s", optimizer)
     return cotta_model
 
+def setup_vida(args, model):
+    model = vida.configure_model(model, cfg)
+    model_param, vida_param = vida.collect_params(model)
+    optimizer = setup_optimizer_vida(model_param, vida_param, cfg.OPTIM.LR, cfg.OPTIM.ViDALR)
+    vida_model = vida.ViDA(model, optimizer,
+                           steps=cfg.OPTIM.STEPS,
+                           episodic=cfg.MODEL.EPISODIC,
+                           unc_thr = args.unc_thr,
+                           ema = cfg.OPTIM.MT,
+                           ema_vida = cfg.OPTIM.MT_ViDA,
+                           )
+    logger.info(f"model for adaptation: %s", model)
+    logger.info(f"optimizer for adaptation: %s", optimizer)
+    return vida_model
 
+def setup_optimizer_vida(params, params_vida, model_lr, vida_lr):
+    if cfg.OPTIM.METHOD == 'Adam':
+        return optim.Adam([{"params": params, "lr": model_lr},
+                                  {"params": params_vida, "lr": vida_lr}],
+                                 lr=1e-5, betas=(cfg.OPTIM.BETA, 0.999),weight_decay=cfg.OPTIM.WD)
+
+    elif cfg.OPTIM.METHOD == 'SGD':
+        return optim.SGD([{"params": params, "lr": model_lr},
+                                  {"params": params_vida, "lr": vida_lr}],
+                                    momentum=cfg.OPTIM.MOMENTUM,dampening=cfg.OPTIM.DAMPENING,
+                                    nesterov=cfg.OPTIM.NESTEROV,
+                                 lr=1e-5,weight_decay=cfg.OPTIM.WD)
+    else:
+        raise NotImplementedError
 if __name__ == '__main__':
     evaluate('"Imagenet-C evaluation.')

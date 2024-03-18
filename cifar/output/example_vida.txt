@@ -1,0 +1,450 @@
+[24/03/11 07:44:03] [conf.py:  233]: PyTorch Version: torch=1.10.0, cuda=11.3, cudnn=8200
+[24/03/11 07:44:03] [conf.py:  235]: BN:
+  EPS: 1e-05
+  MOM: 0.1
+CKPT_DIR: ./ckpt
+CORRUPTION:
+  DATASET: cifar10
+  NUM_EX: 10000
+  SEVERITY: [5]
+  TYPE: ['gaussian_noise', 'shot_noise', 'impulse_noise', 'defocus_blur', 'glass_blur', 'motion_blur', 'zoom_blur', 'snow', 'frost', 'fog', 'brightness', 'contrast', 'elastic_transform', 'pixelate', 'jpeg_compression']
+CUDNN:
+  BENCHMARK: True
+DATA_DIR: /dataset
+DESC: 
+LOG_DEST: vida_240311_074403.txt
+LOG_TIME: 240311_074403
+MODEL:
+  ADAPTATION: vida
+  ARCH: Standard_VITB
+  EPISODIC: False
+OPTIM:
+  AP: 0.92
+  BETA: 0.9
+  DAMPENING: 0.0
+  LR: 0.0001
+  METHOD: Adam
+  MOMENTUM: 0.9
+  MT: 0.999
+  MT_ViDA: 0.999
+  NESTEROV: True
+  RST: 0.01
+  STEPS: 1
+  ViDALR: 1e-05
+  WD: 0.0
+RNG_SEED: 1
+SAVE_DIR: ./output
+TEST:
+  BATCH_SIZE: 40
+  ckpt: /dataset/vit_1_128_vida.t7
+  vida_rank1: 1
+  vida_rank2: 128
+size: 384
+[24/03/11 07:44:14] [cifar10c_vit.py:   46]: test-time adaptation: ViDA
+[24/03/11 07:44:15] [cifar10c_vit.py:  170]: model for adaptation: DataParallel(
+  (module): VisionTransformer(
+    (patch_embed): PatchEmbed(
+      (proj): Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16))
+      (norm): Identity()
+    )
+    (pos_drop): Dropout(p=0.0, inplace=False)
+    (blocks): Sequential(
+      (0): Block(
+        (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (qkv): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=2304, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=2304, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=2304, bias=False)
+          )
+          (attn_drop): Dropout(p=0.0, inplace=False)
+          (proj): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=768, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=768, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=768, bias=False)
+          )
+          (proj_drop): Dropout(p=0.0, inplace=False)
+        )
+        (drop_path): Identity()
+        (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (fc2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (1): Block(
+        (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (qkv): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=2304, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=2304, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=2304, bias=False)
+          )
+          (attn_drop): Dropout(p=0.0, inplace=False)
+          (proj): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=768, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=768, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=768, bias=False)
+          )
+          (proj_drop): Dropout(p=0.0, inplace=False)
+        )
+        (drop_path): Identity()
+        (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (fc2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (2): Block(
+        (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (qkv): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=2304, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=2304, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=2304, bias=False)
+          )
+          (attn_drop): Dropout(p=0.0, inplace=False)
+          (proj): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=768, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=768, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=768, bias=False)
+          )
+          (proj_drop): Dropout(p=0.0, inplace=False)
+        )
+        (drop_path): Identity()
+        (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (fc2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (3): Block(
+        (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (qkv): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=2304, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=2304, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=2304, bias=False)
+          )
+          (attn_drop): Dropout(p=0.0, inplace=False)
+          (proj): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=768, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=768, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=768, bias=False)
+          )
+          (proj_drop): Dropout(p=0.0, inplace=False)
+        )
+        (drop_path): Identity()
+        (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (fc2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (4): Block(
+        (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (qkv): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=2304, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=2304, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=2304, bias=False)
+          )
+          (attn_drop): Dropout(p=0.0, inplace=False)
+          (proj): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=768, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=768, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=768, bias=False)
+          )
+          (proj_drop): Dropout(p=0.0, inplace=False)
+        )
+        (drop_path): Identity()
+        (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (fc2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (5): Block(
+        (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (qkv): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=2304, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=2304, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=2304, bias=False)
+          )
+          (attn_drop): Dropout(p=0.0, inplace=False)
+          (proj): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=768, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=768, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=768, bias=False)
+          )
+          (proj_drop): Dropout(p=0.0, inplace=False)
+        )
+        (drop_path): Identity()
+        (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (fc2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (6): Block(
+        (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (qkv): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=2304, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=2304, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=2304, bias=False)
+          )
+          (attn_drop): Dropout(p=0.0, inplace=False)
+          (proj): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=768, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=768, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=768, bias=False)
+          )
+          (proj_drop): Dropout(p=0.0, inplace=False)
+        )
+        (drop_path): Identity()
+        (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (fc2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (7): Block(
+        (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (qkv): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=2304, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=2304, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=2304, bias=False)
+          )
+          (attn_drop): Dropout(p=0.0, inplace=False)
+          (proj): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=768, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=768, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=768, bias=False)
+          )
+          (proj_drop): Dropout(p=0.0, inplace=False)
+        )
+        (drop_path): Identity()
+        (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (fc2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (8): Block(
+        (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (qkv): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=2304, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=2304, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=2304, bias=False)
+          )
+          (attn_drop): Dropout(p=0.0, inplace=False)
+          (proj): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=768, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=768, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=768, bias=False)
+          )
+          (proj_drop): Dropout(p=0.0, inplace=False)
+        )
+        (drop_path): Identity()
+        (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (fc2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (9): Block(
+        (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (qkv): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=2304, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=2304, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=2304, bias=False)
+          )
+          (attn_drop): Dropout(p=0.0, inplace=False)
+          (proj): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=768, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=768, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=768, bias=False)
+          )
+          (proj_drop): Dropout(p=0.0, inplace=False)
+        )
+        (drop_path): Identity()
+        (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (fc2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (10): Block(
+        (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (qkv): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=2304, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=2304, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=2304, bias=False)
+          )
+          (attn_drop): Dropout(p=0.0, inplace=False)
+          (proj): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=768, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=768, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=768, bias=False)
+          )
+          (proj_drop): Dropout(p=0.0, inplace=False)
+        )
+        (drop_path): Identity()
+        (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (fc2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+      (11): Block(
+        (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (attn): Attention(
+          (qkv): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=2304, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=2304, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=2304, bias=False)
+          )
+          (attn_drop): Dropout(p=0.0, inplace=False)
+          (proj): ViDAInjectedLinear(
+            (linear_vida): Linear(in_features=768, out_features=768, bias=True)
+            (vida_down): Linear(in_features=768, out_features=1, bias=False)
+            (vida_up): Linear(in_features=1, out_features=768, bias=False)
+            (vida_down2): Linear(in_features=768, out_features=128, bias=False)
+            (vida_up2): Linear(in_features=128, out_features=768, bias=False)
+          )
+          (proj_drop): Dropout(p=0.0, inplace=False)
+        )
+        (drop_path): Identity()
+        (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (fc2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+      )
+    )
+    (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+    (pre_logits): Identity()
+    (head): Linear(in_features=768, out_features=10, bias=True)
+  )
+)
+[24/03/11 07:44:15] [cifar10c_vit.py:  171]: optimizer for adaptation: Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    eps: 1e-08
+    lr: 0.0001
+    weight_decay: 0.0
+
+Parameter Group 1
+    amsgrad: False
+    betas: (0.9, 0.999)
+    eps: 1e-08
+    lr: 1e-05
+    weight_decay: 0.0
+)
+[24/03/11 07:44:15] [cifar10c_vit.py:   55]: resetting model
+[24/03/11 08:13:01] [cifar10c_vit.py:   68]: error % [gaussian_noise5]: 50.86%
+[24/03/11 08:13:01] [cifar10c_vit.py:   59]: not resetting model
+[24/03/11 08:42:01] [cifar10c_vit.py:   68]: error % [shot_noise5]: 43.41%
+[24/03/11 08:42:01] [cifar10c_vit.py:   59]: not resetting model
+[24/03/11 09:10:37] [cifar10c_vit.py:   68]: error % [impulse_noise5]: 20.05%
+[24/03/11 09:10:37] [cifar10c_vit.py:   59]: not resetting model
+[24/03/11 09:38:43] [cifar10c_vit.py:   68]: error % [defocus_blur5]: 11.48%
+[24/03/11 09:38:43] [cifar10c_vit.py:   59]: not resetting model
+[24/03/11 10:06:56] [cifar10c_vit.py:   68]: error % [glass_blur5]: 29.10%
+[24/03/11 10:06:56] [cifar10c_vit.py:   59]: not resetting model
+[24/03/11 10:35:18] [cifar10c_vit.py:   68]: error % [motion_blur5]: 12.28%
+[24/03/11 10:35:18] [cifar10c_vit.py:   59]: not resetting model
+[24/03/11 11:03:51] [cifar10c_vit.py:   68]: error % [zoom_blur5]: 6.88%
+[24/03/11 11:03:51] [cifar10c_vit.py:   59]: not resetting model
+[24/03/11 11:32:36] [cifar10c_vit.py:   68]: error % [snow5]: 7.36%
+[24/03/11 11:32:36] [cifar10c_vit.py:   59]: not resetting model
+[24/03/11 12:01:24] [cifar10c_vit.py:   68]: error % [frost5]: 9.03%
+[24/03/11 12:01:24] [cifar10c_vit.py:   59]: not resetting model
+[24/03/11 12:29:39] [cifar10c_vit.py:   68]: error % [fog5]: 11.19%
+[24/03/11 12:29:39] [cifar10c_vit.py:   59]: not resetting model
+[24/03/11 12:58:15] [cifar10c_vit.py:   68]: error % [brightness5]: 3.19%
+[24/03/11 12:58:15] [cifar10c_vit.py:   59]: not resetting model
+[24/03/11 13:26:53] [cifar10c_vit.py:   68]: error % [contrast5]: 21.75%
+[24/03/11 13:26:53] [cifar10c_vit.py:   59]: not resetting model
+[24/03/11 13:55:33] [cifar10c_vit.py:   68]: error % [elastic_transform5]: 12.59%
+[24/03/11 13:55:33] [cifar10c_vit.py:   59]: not resetting model
+[24/03/11 14:24:12] [cifar10c_vit.py:   68]: error % [pixelate5]: 26.13%
+[24/03/11 14:24:12] [cifar10c_vit.py:   59]: not resetting model
+[24/03/11 14:53:05] [cifar10c_vit.py:   68]: error % [jpeg_compression5]: 15.36%

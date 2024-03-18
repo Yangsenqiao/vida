@@ -1,0 +1,36 @@
+MODEL:
+  ADAPTATION: vida
+  ARCH: Standard_VITB
+TEST:
+  BATCH_SIZE: 40
+  vida_rank1: 1
+  vida_rank2: 128
+CORRUPTION:
+  DATASET: cifar10
+  SEVERITY:
+    - 5
+  TYPE:
+    - gaussian_noise
+    - shot_noise
+    - impulse_noise
+    - defocus_blur
+    - glass_blur
+    - motion_blur
+    - zoom_blur
+    - snow
+    - frost
+    - fog
+    - brightness
+    - contrast
+    - elastic_transform
+    - pixelate
+    - jpeg_compression
+OPTIM:
+  METHOD: Adam
+  STEPS: 1
+  BETA: 0.9
+  LR: 1e-4
+  ViDALR: 1e-5
+  WD: 0.
+  MT: 0.999
+  MT_ViDA: 0.999

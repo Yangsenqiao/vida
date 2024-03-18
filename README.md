@@ -30,22 +30,30 @@ bash ./bash/tent_cnn.sh # Tent
 bash ./bash/cotta_cnn.sh # CoTTA
 ```
 * **ViT** as the backbone
+
+Our source model is from timm, you can directly donwload it from the code.
+
+And our source ViDA model is [here](https://drive.google.com/file/d/1-ft1sUROp6nb57ToLf4USifUGUguFlJF/view?usp=sharing)
 ```bash
 cd imagenet
 bash ./bash/source_vit.sh # Source model directly test on target domain
 bash ./bash/tent_vit.sh # Tent 
 bash ./bash/cotta_vit.sh # CoTTA
+bash ./bash/vida_vit.sh # ViDA
 ```
 
 ### Cifar10-to-Cifar10C task 
 We release the codebase of the baseline method based vit. 
 
 Please load the source model from [here](https://drive.google.com/file/d/1pAoz4Wwos74DjWPQ5d-6ntyjQkmp9FPE/view?usp=sharing)
+
+And our source ViDA model is [here](https://drive.google.com/file/d/13R0ZoHaUUXL4PYHWWIwl2NvEcU_3JJxU/view?usp=sharing)
 ```bash
 cd cifar
 bash ./bash/source_vit.sh # Source model directly test on target domain
 bash ./bash/tent_vit.sh # Tent 
 bash ./bash/cotta_vit.sh # CoTTA
+bash ./bash/vida_vit.sh # ViDA
 ```
 
 Additional codes will be available soon.
