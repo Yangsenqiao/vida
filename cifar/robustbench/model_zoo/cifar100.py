@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
 import torch
+import timm
 
 from robustbench.model_zoo.architectures.dm_wide_resnet import CIFAR100_MEAN, CIFAR100_STD, \
     DMWideResNet, Swish, DMPreActResNet
@@ -10,7 +11,9 @@ from robustbench.model_zoo.architectures.wide_resnet import WideResNet
 from robustbench.model_zoo.enums import ThreatModel
 import torch.nn as nn
 
-
+def modify_head(model):
+    model.head = nn.Linear(model.head.in_features, 100)
+    return model
 
 class Chen2020EfficientNet(WideResNet):
     def __init__(self, depth=34, widen_factor=10):
@@ -218,7 +221,10 @@ linf = OrderedDict([
                                std=CIFAR100_STD),
         'gdrive_id': '1-qUvfOjq6x4I8mZynfGtzzCH_nvqS_VQ'
     }),
-
+    ('Standard_VITB', {
+    'model': lambda: modify_head(timm.create_model("vit_base_patch16_384", pretrained=True)),
+    'gdrive_id': '',
+    }),
 ])
 
 common_corruptions = OrderedDict([
@@ -251,6 +257,10 @@ common_corruptions = OrderedDict([
     ('Hendrycks2020AugMix_ResNeXt', {
       'model': Hendrycks2020AugMixResNeXtNet,
       'gdrive_id': '1ocnHbvDdOBLvgNr6K7vEYL08hUdkD1Rv'
+    }),
+    ('Standard_VITB', {
+    'model': lambda: modify_head(timm.create_model("vit_base_patch16_384", pretrained=True)),
+    'gdrive_id': '',
     }),
 
 ])

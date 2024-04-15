@@ -115,7 +115,9 @@ def load_model(model_name: str,
         model = models[model_name]['model']()
         if dataset_ == BenchmarkDataset.cifar_10 and 'Standard' in model_name:
             return model.eval()
-        
+        if dataset_ == BenchmarkDataset.cifar_100 and 'Standard' in model_name:
+            return model.eval()
+            
         if not os.path.exists(model_dir_):
             os.makedirs(model_dir_)
         if not os.path.isfile(model_path):
