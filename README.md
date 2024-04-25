@@ -43,20 +43,30 @@ bash ./bash/vida_vit.sh # ViDA
 ```
 
 ### Cifar10-to-Cifar10C task 
-We release the codebase of the baseline method based vit. 
-
 Please load the source model from [here](https://drive.google.com/file/d/1pAoz4Wwos74DjWPQ5d-6ntyjQkmp9FPE/view?usp=sharing)
 
 And our source ViDA model is [here](https://drive.google.com/file/d/13R0ZoHaUUXL4PYHWWIwl2NvEcU_3JJxU/view?usp=sharing)
 ```bash
 cd cifar
-bash ./bash/source_vit.sh # Source model directly test on target domain
-bash ./bash/tent_vit.sh # Tent 
-bash ./bash/cotta_vit.sh # CoTTA
-bash ./bash/vida_vit.sh # ViDA
+bash ./bash/cifar10/source_vit.sh # Source model directly test on target domain
+bash ./bash/cifar10/tent_vit.sh # Tent 
+bash ./bash/cifar10/cotta_vit.sh # CoTTA
+bash ./bash/cifar10/vida_vit.sh # ViDA
 ```
 
-Additional codes will be available soon.
+### Cifar100-to-Cifar100C task 
+Please load the source model from [here](https://drive.google.com/file/d/1yRekkpkIdwX_LFsOh4Ba9ndaECnY-UC-/view?usp=sharing)
+
+And our source ViDA model is [here](https://drive.google.com/file/d/14-i94U8pyzKIR-YAzCpTYIeGGc-HUvbM/view?usp=sharing)
+```bash
+cd cifar
+bash ./bash/cifar100/source_vit.sh # Source model directly test on target domain
+bash ./bash/cifar100/tent_vit.sh # Tent 
+bash ./bash/cifar100/cotta_vit.sh # CoTTA
+bash ./bash/cifar100/vida_vit.sh # ViDA
+```
+
+For segmentation code, you can refer to [cotta](https://github.com/qinenergy/cotta) and [SVDP](https://github.com/Anonymous-012/SVDP). As for the source model, you can directly use Segformer trained on Cityscapes.
 ## Citation
 Please cite our work if you find it useful.
 ```bibtex
